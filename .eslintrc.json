@@ -4,6 +4,6 @@
         "es2021": true,
         "commonjs": false
     },
-    "extends": ["eslint:recommended", "plugin:jest/recommended", "plugin:prettier/recommended"],
+    "extends": ["eslint:recommended", "plugin:prettier/recommended"],
     "plugins": ["prettier"]
 }
