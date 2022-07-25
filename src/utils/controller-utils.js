@@ -61,8 +61,8 @@ const query = async (res, queryString, queryOptions, notFound, errorHandler) => 
     });
 };
 
-const sendError = (res, message, status, error = 'N/A') => {
-    res.status(status).send({message, error});
+const sendError = (res, message, status, trace = 'N/A') => {
+    res.status(status).send({message, trace});
 };
 
 const tryCatch = async (res, callback) => {

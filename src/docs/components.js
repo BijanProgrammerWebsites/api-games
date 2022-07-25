@@ -98,7 +98,7 @@ module.exports = {
                         type: 'string',
                         description: 'Human-readable error message',
                     },
-                    error: {
+                    trace: {
                         type: 'string',
                         description: 'Stack trace',
                     },
