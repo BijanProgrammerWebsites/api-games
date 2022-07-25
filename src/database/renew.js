@@ -21,13 +21,20 @@ const main = async () => {
         const TABLE_USER_INSERT_BIJAN = (await fs.readFile('src/queries/table-user-insert-bijan.sql')).toString();
         const TABLE_USER_INSERT_TEST = (await fs.readFile('src/queries/table-user-insert-test.sql')).toString();
 
-        connect();
+        const connection = await connect();
 
-        await query(FAKE_RES, 'DROP DATABASE IF EXISTS codestar_games');
-        await query(FAKE_RES, 'CREATE DATABASE codestar_games');
-        await query(FAKE_RES, 'USE codestar_games');
+        console.log('dropping database if exists ...');
+        await connection.query(`DROP DATABASE IF EXISTS ${process.env.DB_NAME}`);
+        console.log('creating database ...');
+        await connection.query(`CREATE DATABASE ${process.env.DB_NAME}`);
+        console.log('using database ...');
+        await connection.query(`USE ${process.env.DB_NAME}`);
+
+        console.log('creating user table ...');
         await query(FAKE_RES, TABLE_USER_CREATE);
+        console.log('inserting bijan ...');
         await query(FAKE_RES, TABLE_USER_INSERT_BIJAN);
+        console.log('inserting test ...');
         await query(FAKE_RES, TABLE_USER_INSERT_TEST);
     } catch (err) {
         console.log(err);

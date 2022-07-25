@@ -20,4 +20,4 @@ const ErrorMessage = {
     SOMETHING_WENT_WRONG: 'درخواست مورد نظر با مشکل روبرو شد',
 };
 
-module.export = {ErrorMessage};
+module.exports = {ErrorMessage};

@@ -6,31 +6,25 @@ config();
 let connection;
 let pool;
 
-const connect = () => {
-    connection = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-    });
-
-    connection.connect((err) => {
-        if (err) throw err;
-        console.log(`connected to mysql as ${connection.threadId}`);
-    });
-};
-
-const getPool = () => {
-    if (!pool) {
-        pool = mysql.createPool({
-            connectionLimit: 100,
+const connect = async () => {
+    return new Promise((resolve, reject) => {
+        connection = mysql.createConnection({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
-            database: process.env.DB_NAME,
         });
-    }
 
-    return pool;
+        connection.connect((err) => {
+            if (err) return reject(err);
+            console.log(`connected to mysql as ${connection.threadId}`);
+
+            resolve(connection);
+        });
+    });
+};
+
+const getConnection = () => {
+    return connection;
 };
 
 const disconnect = () => {
@@ -40,6 +34,6 @@ const disconnect = () => {
 
 module.exports = {
     connect,
-    getPool,
+    getConnection,
     disconnect,
 };

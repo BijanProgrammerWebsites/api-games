@@ -19,6 +19,7 @@
         "swagger-ui-express": "^4.5.0"
     },
     "devDependencies": {
+        "@types/mysql": "^2.15.21",
         "eslint": "^8.20.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.2.1",

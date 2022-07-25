@@ -3,28 +3,33 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 
 const {connect} = require('./database/connect');
-connect();
 
 const userRouter = require('./routers/user');
 const docs = require('./docs/index');
 
 const PORT = process.env.PORT || 5000;
 
-// init app
-const app = express();
+const main = async () => {
+    await connect();
 
-// parse middlewares
-app.use(express.json());
-app.use(express.static('public'));
-app.use(cors());
+    // init app
+    const app = express();
 
-// routers
-app.get('', (req, res) => {
-    res.send('Hello, friend!');
+    // parse middlewares
+    app.use(express.json());
+    app.use(express.static('public'));
+    app.use(cors());
+
+    // routers
+    app.get('', (req, res) => {
+        res.send('Hello, friend!');
+    });
+
+    app.use('/user', userRouter);
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
+    app.listen(PORT, () => console.log(`listening on port ${PORT} ...`));
+};
+
+main().then(() => {
+    console.log('Done!');
 });
-
-app.use('/user', userRouter);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
-app.listen(PORT, () => console.log(`listening on port ${PORT} ...`));
-
-module.exports = app;

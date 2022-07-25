@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const {ErrorMessage} = require('../enums/error-message');
-const {getPool} = require('../database/connect');
+const {getPool, getConnection} = require('../database/connect');
 
 const createAndSendToken = (res, status, id) => {
     const token = jwt.sign({id}, process.env.JWT_SECRET);
@@ -37,35 +37,26 @@ const hashCompare = (res, word, hashed) => {
 
 const query = async (res, queryString, queryOptions, notFound, errorHandler) => {
     return new Promise((resolve, reject) => {
-        getPool().getConnection((err, connection) => {
+        getConnection().query(queryString, queryOptions, (err, rows) => {
             if (err) {
-                sendError(res, ErrorMessage.DATABASE, 500);
+                if (errorHandler) {
+                    if (typeof errorHandler === 'function') errorHandler(err);
+                    else sendError(res, errorHandler, 500, err);
+                } else {
+                    sendError(res, ErrorMessage.SOMETHING_WENT_WRONG, 500, err);
+                }
+
                 return reject();
             }
 
-            connection.query(queryString, queryOptions, (err, rows) => {
-                connection.release();
+            if (notFound && (!rows || rows.length === 0)) {
+                if (typeof notFound === 'function') notFound();
+                else sendError(res, notFound, 404);
 
-                if (err) {
-                    if (errorHandler) {
-                        if (typeof errorHandler === 'function') errorHandler(err);
-                        else sendError(res, errorHandler, 500, err);
-                    } else {
-                        sendError(res, ErrorMessage.SOMETHING_WENT_WRONG, 500, err);
-                    }
+                return reject();
+            }
 
-                    return reject();
-                }
-
-                if (notFound && (!rows || rows.length === 0)) {
-                    if (typeof notFound === 'function') notFound();
-                    else sendError(res, notFound, 404);
-
-                    return reject();
-                }
-
-                resolve(rows);
-            });
+            resolve(rows);
         });
     });
 };
