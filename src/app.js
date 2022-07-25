@@ -19,6 +19,7 @@ const main = async () => {
     // parse middlewares
     app.use(express.json());
     app.use(express.static('public'));
+    app.use(cors());
 
     // routers
     app.get('', (req, res) => {
