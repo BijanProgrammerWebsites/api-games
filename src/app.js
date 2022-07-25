@@ -10,7 +10,8 @@ const docs = require('./docs/index');
 const PORT = process.env.PORT || 5000;
 
 const main = async () => {
-    await connect();
+    const connection = await connect();
+    await connection.query(`USE ${process.env.DB_NAME}`);
 
     // init app
     const app = express();
