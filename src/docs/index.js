@@ -1,5 +1,5 @@
-const components = require('./components.js');
-const user = require('./user/index.js');
+const components = require('./components');
+const user = require('./user/index');
 
 module.exports = {
     openapi: '3.0.3',

@@ -1,6 +1,6 @@
-const {connect, disconnect} = require('./connect.js');
+const {connect, disconnect} = require('./connect');
 
-const {query} = require('../utils/controller-utils.js');
+const {query} = require('../utils/controller-utils');
 const fs = require('fs/promises');
 
 const FAKE_RES = {

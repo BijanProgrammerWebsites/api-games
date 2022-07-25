@@ -1,8 +1,8 @@
-const one = require('./one.js');
-const auth = require('./auth.js');
-const register = require('./register.js');
-const login = require('./login.js');
-const alter = require('./alter.js');
+const one = require('./one');
+const auth = require('./auth');
+const register = require('./register');
+const login = require('./login');
+const alter = require('./alter');
 
 module.exports = {
     paths: {

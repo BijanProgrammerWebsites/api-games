@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 
-const {connect} = require('./database/connect.js');
+const {connect} = require('./database/connect');
 connect();
 
-const userRouter = require('./routers/user.js');
-const docs = require('./docs/index.js');
+const userRouter = require('./routers/user');
+const docs = require('./docs/index');
 
 const PORT = process.env.PORT || 5000;
 

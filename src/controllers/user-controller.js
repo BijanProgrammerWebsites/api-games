@@ -1,4 +1,4 @@
-const {ErrorMessage} = require('../enums/error-message.js');
+const {ErrorMessage} = require('../enums/error-message');
 
 const {
     createAndSendToken,
@@ -9,7 +9,7 @@ const {
     tryCatch,
     verifyToken,
     verifyTokenQuery,
-} = require('../utils/controller-utils.js');
+} = require('../utils/controller-utils');
 
 async function one(req, res) {
     const {id} = req.params;

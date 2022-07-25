@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const {ErrorMessage} = require('../enums/error-message.js');
-const {getPool} = require('../database/connect.js');
+const {ErrorMessage} = require('../enums/error-message');
+const {getPool} = require('../database/connect');
 
 const createAndSendToken = (res, status, id) => {
     const token = jwt.sign({id}, process.env.JWT_SECRET);
