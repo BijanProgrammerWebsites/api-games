@@ -22,7 +22,7 @@ const main = async () => {
 
     // routers
     app.get('', (req, res) => {
-        res.send('Hello, friend!');
+        res.redirect('/api-docs');
     });
 
     app.use('/user', userRouter);
