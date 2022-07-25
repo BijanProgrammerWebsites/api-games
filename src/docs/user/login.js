@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     post: {
         tags: ['user'],
         description: "Logs the user in; At least one of the 'username' or 'email' fields has to be present",

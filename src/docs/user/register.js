@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     post: {
         tags: ['user'],
         description: 'Registers the user; "firstName" and "lastName" are optional',

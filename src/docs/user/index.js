@@ -1,10 +1,10 @@
-import one from './one.js';
-import auth from './auth.js';
-import register from './register.js';
-import login from './login.js';
-import alter from './alter.js';
+const one = require('./one.js');
+const auth = require('./auth.js');
+const register = require('./register.js');
+const login = require('./login.js');
+const alter = require('./alter.js');
 
-export default {
+module.exports = {
     paths: {
         '/user/one/{id}': {
             ...one,

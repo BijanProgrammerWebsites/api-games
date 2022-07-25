@@ -1,6 +1,6 @@
-import {ErrorMessage} from '../enums/error-message.js';
+const {ErrorMessage} = require('../enums/error-message.js');
 
-import {
+const {
     createAndSendToken,
     hash,
     hashCompare,
@@ -9,9 +9,9 @@ import {
     tryCatch,
     verifyToken,
     verifyTokenQuery,
-} from '../utils/controller-utils.js';
+} = require('../utils/controller-utils.js');
 
-export async function one(req, res) {
+async function one(req, res) {
     const {id} = req.params;
 
     if (!id) {
@@ -29,7 +29,7 @@ export async function one(req, res) {
     });
 }
 
-export async function auth(req, res) {
+async function auth(req, res) {
     try {
         const {id} = await verifyToken(req);
         res.send({id});
@@ -39,7 +39,7 @@ export async function auth(req, res) {
     }
 }
 
-export async function register(req, res) {
+async function register(req, res) {
     const {username, email, firstName, lastName, password} = req.body;
 
     if (!username || !email || !password) {
@@ -65,7 +65,7 @@ export async function register(req, res) {
     });
 }
 
-export async function login(req, res) {
+async function login(req, res) {
     const {username, email, password} = req.body;
 
     if ((!username && !email) || !password) {
@@ -84,7 +84,7 @@ export async function login(req, res) {
     });
 }
 
-export async function alter(req, res) {
+async function alter(req, res) {
     const fields = ['username', 'email', 'firstName', 'lastName', 'password', 'avatar', 'gender', 'birthDate'];
     const validFields = fields.filter((f) => !!req.body[f]);
 
@@ -111,3 +111,11 @@ export async function alter(req, res) {
         res.send();
     });
 }
+
+module.exports = {
+    one,
+    auth,
+    register,
+    login,
+    alter,
+};

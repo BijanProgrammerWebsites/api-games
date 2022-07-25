@@ -1,12 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
+const express = require('express');
+const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
 
-import {connect} from './database/connect.js';
+const {connect} = require('./database/connect.js');
 connect();
 
-import userRouter from './routers/user.js';
-import docs from './docs/index.js';
+const userRouter = require('./routers/user.js');
+const docs = require('./docs/index.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -27,4 +27,4 @@ app.use('/user', userRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
 app.listen(PORT, () => console.log(`listening on port ${PORT} ...`));
 
-export default app;
+module.exports = app;

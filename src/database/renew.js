@@ -1,11 +1,7 @@
-import {connect, disconnect} from './connect.js';
+const {connect, disconnect} = require('./connect.js');
 
-import {query} from '../utils/controller-utils.js';
-import fs from 'fs/promises';
-
-const TABLE_USER_CREATE = (await fs.readFile('src/queries/table-user-create.sql')).toString();
-const TABLE_USER_INSERT_BIJAN = (await fs.readFile('src/queries/table-user-insert-bijan.sql')).toString();
-const TABLE_USER_INSERT_TEST = (await fs.readFile('src/queries/table-user-insert-test.sql')).toString();
+const {query} = require('../utils/controller-utils.js');
+const fs = require('fs/promises');
 
 const FAKE_RES = {
     status: (code) => {
@@ -21,6 +17,10 @@ const FAKE_RES = {
 
 const main = async () => {
     try {
+        const TABLE_USER_CREATE = (await fs.readFile('src/queries/table-user-create.sql')).toString();
+        const TABLE_USER_INSERT_BIJAN = (await fs.readFile('src/queries/table-user-insert-bijan.sql')).toString();
+        const TABLE_USER_INSERT_TEST = (await fs.readFile('src/queries/table-user-insert-test.sql')).toString();
+
         connect();
 
         await query(FAKE_RES, 'DROP DATABASE IF EXISTS codestar_games');

@@ -1,15 +1,15 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-import {ErrorMessage} from '../enums/error-message.js';
-import {getPool} from '../database/connect.js';
+const {ErrorMessage} = require('../enums/error-message.js');
+const {getPool} = require('../database/connect.js');
 
-export const createAndSendToken = (res, status, id) => {
+const createAndSendToken = (res, status, id) => {
     const token = jwt.sign({id}, process.env.JWT_SECRET);
     res.status(status).send({id, token});
 };
 
-export const hash = (word) => {
+const hash = (word) => {
     return new Promise((resolve, reject) => {
         bcrypt.genSalt(10, (err, salt) => {
             if (err) return reject(err);
@@ -22,7 +22,7 @@ export const hash = (word) => {
     });
 };
 
-export const hashCompare = (res, word, hashed) => {
+const hashCompare = (res, word, hashed) => {
     return new Promise((resolve, reject) => {
         bcrypt.compare(word, hashed, (err, result) => {
             if (err || !result) {
@@ -35,7 +35,7 @@ export const hashCompare = (res, word, hashed) => {
     });
 };
 
-export const query = async (res, queryString, queryOptions, notFound, errorHandler) => {
+const query = async (res, queryString, queryOptions, notFound, errorHandler) => {
     return new Promise((resolve, reject) => {
         getPool().getConnection((err, connection) => {
             if (err) {
@@ -70,11 +70,11 @@ export const query = async (res, queryString, queryOptions, notFound, errorHandl
     });
 };
 
-export const sendError = (res, message, status, error = 'N/A') => {
+const sendError = (res, message, status, error = 'N/A') => {
     res.status(status).send({message, error});
 };
 
-export const tryCatch = async (res, callback) => {
+const tryCatch = async (res, callback) => {
     try {
         await callback();
     } catch (err) {
@@ -82,7 +82,7 @@ export const tryCatch = async (res, callback) => {
     }
 };
 
-export const verifyToken = (req) => {
+const verifyToken = (req) => {
     return new Promise((resolve, reject) => {
         const {token} = req.body;
 
@@ -95,7 +95,7 @@ export const verifyToken = (req) => {
     });
 };
 
-export const verifyTokenQuery = async (req, res, queryString, queryOptions, notFound, errorHandler) => {
+const verifyTokenQuery = async (req, res, queryString, queryOptions, notFound, errorHandler) => {
     let decodedToken;
 
     try {
@@ -107,4 +107,15 @@ export const verifyTokenQuery = async (req, res, queryString, queryOptions, notF
 
     const options = typeof queryOptions === 'function' ? queryOptions(decodedToken.id) : queryOptions;
     return [await query(res, queryString, options, notFound, errorHandler), decodedToken.id];
+};
+
+module.exports = {
+    createAndSendToken,
+    hash,
+    hashCompare,
+    query,
+    sendError,
+    tryCatch,
+    verifyToken,
+    verifyTokenQuery,
 };

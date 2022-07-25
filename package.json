@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "",
     "main": "src/app.js",
-    "type": "module",
     "scripts": {
         "start": "nodemon src/app.js",
         "renew": "node src/database/renew.js"

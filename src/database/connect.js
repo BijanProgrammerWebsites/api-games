@@ -1,12 +1,12 @@
-import mysql from 'mysql';
+const mysql = require('mysql');
 
-import {config} from 'dotenv';
+const {config} = require('dotenv');
 config();
 
 let connection;
 let pool;
 
-export const connect = () => {
+const connect = () => {
     connection = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
@@ -19,7 +19,7 @@ export const connect = () => {
     });
 };
 
-export const getPool = () => {
+const getPool = () => {
     if (!pool) {
         pool = mysql.createPool({
             connectionLimit: 100,
@@ -33,7 +33,13 @@ export const getPool = () => {
     return pool;
 };
 
-export const disconnect = () => {
+const disconnect = () => {
     if (connection) connection.end();
     if (pool) pool.end();
+};
+
+module.exports = {
+    connect,
+    getPool,
+    disconnect,
 };

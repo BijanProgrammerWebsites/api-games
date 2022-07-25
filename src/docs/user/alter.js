@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     post: {
         tags: ['user'],
         description: "Changes user's info; At least one field is required",

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     get: {
         tags: ['user'],
         description: 'Get one user with id',

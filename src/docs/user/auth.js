@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     post: {
         tags: ['user'],
         description: 'Checks to see if user has been logged in',

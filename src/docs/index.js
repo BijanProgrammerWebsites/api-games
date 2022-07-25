@@ -1,7 +1,7 @@
-import components from './components.js';
-import user from './user/index.js';
+const components = require('./components.js');
+const user = require('./user/index.js');
 
-export default {
+module.exports = {
     openapi: '3.0.3',
     info: {
         title: 'Games Server',
