@@ -26,12 +26,8 @@ const main = async () => {
     });
 
     // routers
-    app.get('', (req, res) => {
-        res.redirect('/api-docs');
-    });
-
+    app.use('/', swaggerUi.serve, swaggerUi.setup(docs));
     app.use('/user', userRouter);
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
     app.listen(PORT, () => console.log(`listening on port ${PORT} ...`));
 };
 
