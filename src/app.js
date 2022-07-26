@@ -12,22 +12,29 @@ const main = async () => {
     const connection = await connect();
     await connection.query(`USE ${process.env.DB_NAME}`);
 
-    // init app
+    // init
     const app = express();
+    const router = express.Router();
 
     // parse middlewares
-    app.use(express.json());
-    app.use(express.static('public'));
+    router.use(express.json());
+    router.use(express.static('public'));
 
-    app.use((req, res, next) => {
+    // cors
+    router.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', '*');
         next();
     });
 
-    // routers
-    app.use('/', swaggerUi.serve, swaggerUi.setup(docs));
-    app.use('/user', userRouter);
+    // routes
+    router.use('/user', userRouter);
+    router.use('/', swaggerUi.serve, swaggerUi.setup(docs));
+
+    // base href
+    app.use(process.env.BASE_HREF || '/', router);
+
+    // start
     app.listen(PORT, () => console.log(`listening on port ${PORT} ...`));
 };
 
