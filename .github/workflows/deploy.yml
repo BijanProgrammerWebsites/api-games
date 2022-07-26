@@ -16,9 +16,10 @@ jobs:
                   key: ${{secrets.SSH_KEY}}
                   port: 22
                   script: |
-                      cd /repos/games-server
+                      cd /repos/api-games
                       git fetch
                       git checkout master
                       git reset --hard HEAD
                       git pull origin master
+                      npm i
                       forever restart 0
