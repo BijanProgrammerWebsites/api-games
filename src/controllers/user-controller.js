@@ -35,7 +35,6 @@ async function auth(req, res) {
         res.send({id});
     } catch (err) {
         sendError(res, ErrorMessage.AUTHENTICATION_FAILED, 401);
-        throw err;
     }
 }
 
