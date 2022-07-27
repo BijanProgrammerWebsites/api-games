@@ -6,7 +6,7 @@ module.exports = {
                 properties: {
                     id: {
                         type: 'number',
-                        example: 7,
+                        example: 23,
                     },
                     username: {
                         type: 'string',
@@ -51,7 +51,7 @@ module.exports = {
                 properties: {
                     id: {
                         type: 'number',
-                        example: 7,
+                        example: 23,
                     },
                     username: {
                         type: 'string',
@@ -123,7 +123,7 @@ module.exports = {
                     token: {
                         type: 'string',
                         example:
-                            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjI3OTEyNzAwfQ.92gveaQ9UGZEEi5epNrhg-2MldXUk9MaI09vUZvCKtU',
+                            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTY1ODg4Mjc3Mn0._eFaFDUrI4JL5NS-d6f0J0dTgTyu51oc6AyoS7qHn0U',
                     },
                 },
             },
