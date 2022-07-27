@@ -8,6 +8,12 @@ const docs = require('./docs/index');
 
 const PORT = process.env.PORT || 5000;
 
+const SWAGGER_OPTIONS = {
+    customSiteTitle: 'CodeStar Games',
+    customfavIcon: (process.env.BASE_HREF + '/' || '/') + 'favicon.ico?v=1',
+    customCss: '.swagger-ui .topbar { display: none }',
+};
+
 const main = async () => {
     const connection = await connect();
     await connection.query(`USE ${process.env.DB_NAME}`);
@@ -29,7 +35,7 @@ const main = async () => {
 
     // routes
     router.use('/user', userRouter);
-    router.use('/', swaggerUi.serve, swaggerUi.setup(docs));
+    router.use('/', swaggerUi.serve, swaggerUi.setup(docs, SWAGGER_OPTIONS));
 
     // base href
     app.use(process.env.BASE_HREF || '/', router);
