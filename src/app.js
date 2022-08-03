@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const {connect} = require('./database/connect');
 
 const userRouter = require('./routers/user');
+const gamesRouter = require('./routers/games');
 const docs = require('./docs/index');
 
 const PORT = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ const main = async () => {
 
     // routes
     router.use('/user', userRouter);
+    router.use('/', gamesRouter);
     router.use('/', swaggerUi.serve, swaggerUi.setup(docs, SWAGGER_OPTIONS));
 
     // base href

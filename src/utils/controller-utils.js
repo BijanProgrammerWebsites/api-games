@@ -62,7 +62,7 @@ const query = async (res, queryString, queryOptions, notFound, errorHandler) => 
 };
 
 const sendError = (res, message, status, trace = 'N/A') => {
-    res.status(status).send({message, trace});
+    res.status(status).send({message, trace: typeof trace === 'object' ? trace?.stack : trace});
 };
 
 const tryCatch = async (res, callback) => {

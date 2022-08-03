@@ -1,5 +1,6 @@
 const components = require('./components');
 const user = require('./user/index');
+const games = require('./games/index');
 
 module.exports = {
     openapi: '3.0.3',
@@ -10,5 +11,6 @@ module.exports = {
     ...components,
     paths: {
         ...user.paths,
+        ...games.paths,
     },
 };
