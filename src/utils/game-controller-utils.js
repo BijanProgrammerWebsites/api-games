@@ -110,6 +110,32 @@ function generateSortQuery(sort) {
     }
 }
 
+function generateFiltersQuery(filters = {}) {
+    const queryParts = ['game.total_rating != null'];
+
+    if (filters.status === true) {
+        queryParts.push('game.status = 0');
+    }
+
+    if (Array.isArray(filters.platforms)) {
+        queryParts.push(`game.platforms = [${filters.platforms.join(',')}]`);
+    }
+
+    if (Array.isArray(filters.genres)) {
+        queryParts.push(`game.genres = [${filters.genres.join(',')}]`);
+    }
+
+    if (!isNaN(filters.minimumRating)) {
+        queryParts.push(`game.total_rating >= ${filters.minimumRating}`);
+    }
+
+    if (!isNaN(filters.maximumRating)) {
+        queryParts.push(`game.total_rating <= ${filters.maximumRating}`);
+    }
+
+    return `where ${queryParts.join(' & ')}`;
+}
+
 module.exports = {
     FIELDS,
     generateInit,
@@ -117,4 +143,5 @@ module.exports = {
     convertIgdbGamesToMyGames,
     generateIgdbQuery,
     generateSortQuery,
+    generateFiltersQuery,
 };

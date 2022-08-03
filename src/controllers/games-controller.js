@@ -9,6 +9,7 @@ const {
     convertIgdbGamesToMyGames,
     generateIgdbQuery,
     generateSortQuery,
+    generateFiltersQuery,
 } = require('../utils/game-controller-utils');
 const {GENRES_ARRAY} = require('../data/genres');
 const {PLATFORMS_ARRAY} = require('../data/platforms');
@@ -55,14 +56,17 @@ async function upcoming(req, res) {
 }
 
 async function search(req, res) {
-    const {searchPhrase, pageSize, offset, sort} = req.body;
+    const {searchPhrase, pageSize, offset, sort, filters} = req.body;
 
     await tryCatch(res, async () => {
         const searchQueryParts = generateIgdbQuery(
             'fields game',
             searchPhrase ? `search "${searchPhrase}"` : '',
+            generateFiltersQuery(filters),
             'limit 500'
         );
+
+        console.log(searchQueryParts);
 
         const searchResponse = await fetch(IGDB_API_SEARCH, generateInit(searchQueryParts));
         const searchData = await searchResponse.json();
@@ -80,7 +84,7 @@ async function search(req, res) {
 
         const gamesQueryParts = generateIgdbQuery(
             FIELDS,
-            `where id = (${gameIds.join(',')}) & rating != null`,
+            `where id = (${gameIds.join(',')})`,
             `limit ${pageSize || 20}`,
             offset ? `offset ${offset}` : '',
             generateSortQuery(sort)
@@ -94,7 +98,7 @@ async function search(req, res) {
             return;
         }
 
-        res.json({games: await convertIgdbGamesToMyGames(gamesData)});
+        res.json({count: gameIds.length, games: await convertIgdbGamesToMyGames(gamesData)});
     });
 }
 

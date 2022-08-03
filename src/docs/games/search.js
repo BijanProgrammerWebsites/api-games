@@ -11,7 +11,7 @@ module.exports = {
                         properties: {
                             searchPhrase: {
                                 type: 'string',
-                                example: 'Red Dead Redemption 2',
+                                example: 'Red Dead',
                             },
                             pageSize: {
                                 type: 'number',
@@ -25,6 +25,38 @@ module.exports = {
                                 type: 'number',
                                 enum: [0, 1, 2, 3, 4],
                                 example: 2,
+                            },
+                            filters: {
+                                type: 'object',
+                                properties: {
+                                    status: {
+                                        type: 'boolean',
+                                        nullable: true,
+                                        example: true,
+                                    },
+                                    platforms: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'number',
+                                        },
+                                        example: [6],
+                                    },
+                                    genres: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'number',
+                                        },
+                                        example: [5],
+                                    },
+                                    minimumRating: {
+                                        type: 'number',
+                                        example: 23,
+                                    },
+                                    maximumRating: {
+                                        type: 'number',
+                                        example: 90,
+                                    },
+                                },
                             },
                         },
                         required: [],
