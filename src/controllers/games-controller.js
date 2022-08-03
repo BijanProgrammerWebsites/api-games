@@ -47,22 +47,18 @@ async function upcoming(req, res) {
         const gameIds = (await releaseDatesResponse.json()).map((x) => x.game).join(',');
         const response = await fetch(BASE_URL, generateInit(`${FIELDS}; where id = (${gameIds});`));
         const data = await response.json();
-        res.json({game: await convertIgdbGamesToMyGames(data)});
+        res.json({games: await convertIgdbGamesToMyGames(data)});
     });
 }
 
 async function search(req, res) {
     const {searchPhrase} = req.body;
 
-    if (!searchPhrase) {
-        sendError(res, ErrorMessage.SEARCH_PHRASE_NOT_VALID, 400);
-        return;
-    }
-
     await tryCatch(res, async () => {
-        const response = await fetch(BASE_URL, generateInit(`${FIELDS}; search "${searchPhrase}";`));
+        const searchQuery = searchPhrase ? `search "${searchPhrase}";` : '';
+        const response = await fetch(BASE_URL, generateInit(`${FIELDS}; limit 50; ${searchQuery}`));
         const data = await response.json();
-        res.json({game: await convertIgdbGamesToMyGames(data)});
+        res.json({games: await convertIgdbGamesToMyGames(data)});
     });
 }
 

@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const {GENRES} = require('../data/genres');
 const {PLATFORMS} = require('../data/platforms');
 const FIELDS =
-    'fields id,cover,first_release_date,genres,name,platforms,rating,rating_count,release_dates,screenshots,storyline,summary';
+    'fields id,cover,first_release_date,genres,name,platforms,total_rating,total_rating_count,release_dates,screenshots,storyline,summary';
 
 function generateInit(body) {
     return {
@@ -28,8 +28,8 @@ async function convertIgdbGameToMyGame(igdbGame) {
         genres: convertIgdbGenresToMyGenres(igdbGame.genres),
         name: igdbGame.name,
         platforms: convertIgdbPlatformsToMyPlatforms(igdbGame.platforms),
-        rating: Math.round(igdbGame.rating),
-        ratingCount: igdbGame.rating_count,
+        rating: Math.round(igdbGame.total_rating),
+        ratingCount: igdbGame.total_rating_count,
         screenshots: screenshots[igdbGame.id],
         storyline: igdbGame.storyline,
         summary: igdbGame.summary,
@@ -46,8 +46,8 @@ async function convertIgdbGamesToMyGames(igdbGames) {
         genres: convertIgdbGenresToMyGenres(igdbGame.genres),
         name: igdbGame.name,
         platforms: convertIgdbPlatformsToMyPlatforms(igdbGame.platforms),
-        rating: Math.round(igdbGame.rating),
-        ratingCount: igdbGame.rating_count,
+        rating: Math.round(igdbGame.total_rating),
+        ratingCount: igdbGame.total_rating_count,
         summary: igdbGame.summary,
     }));
 }
