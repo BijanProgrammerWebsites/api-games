@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 
 const {GENRES} = require('../data/genres');
 const {PLATFORMS} = require('../data/platforms');
+const {Sort} = require('../enums/sort');
 const FIELDS =
     'fields id,cover,first_release_date,genres,name,platforms,total_rating,total_rating_count,release_dates,screenshots,storyline,summary';
 
@@ -90,9 +91,30 @@ async function convertIgdbImagesToMyImages(igdbGames, isCover) {
     return images;
 }
 
+function generateIgdbQuery(...args) {
+    return args.filter(Boolean).join(';') + ';';
+}
+
+function generateSortQuery(sort) {
+    switch (sort) {
+        case Sort.TOP_SELLER:
+            return 'sort total_rating_count desc';
+        case Sort.MOST_POPULAR:
+            return 'sort total_rating desc';
+        case Sort.NEWEST:
+            return 'sort first_release_date desc';
+        case Sort.OLDEST:
+            return 'sort first_release_date asc';
+        default:
+            return '';
+    }
+}
+
 module.exports = {
     FIELDS,
     generateInit,
     convertIgdbGameToMyGame,
     convertIgdbGamesToMyGames,
+    generateIgdbQuery,
+    generateSortQuery,
 };

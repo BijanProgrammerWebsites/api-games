@@ -13,6 +13,7 @@ const ErrorMessage = {
     SORTER_NOT_VALID: 'مرتب‌کننده معتبر نیست',
     SEARCH_PHRASE_NOT_VALID: 'عبارت مورد جستجو معتبر نیست',
     DATABASE: 'ارتباط با دیتابیس با مشکل روبرو شد',
+    IGDB: 'ارتباط با سرور بازی‌ها با مشکل روبرو شد',
     SOMETHING_WENT_WRONG: 'درخواست مورد نظر با مشکل روبرو شد',
 };
 

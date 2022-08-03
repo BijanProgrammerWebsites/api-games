@@ -13,8 +13,21 @@ module.exports = {
                                 type: 'string',
                                 example: 'Red Dead Redemption 2',
                             },
+                            pageSize: {
+                                type: 'number',
+                                example: 5,
+                            },
+                            offset: {
+                                type: 'number',
+                                example: 2,
+                            },
+                            sort: {
+                                type: 'number',
+                                enum: [0, 1, 2, 3, 4],
+                                example: 2,
+                            },
                         },
-                        required: ['searchPhrase'],
+                        required: [],
                     },
                 },
             },
