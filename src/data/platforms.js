@@ -185,4 +185,6 @@ const PLATFORMS = {
     406: {name: 'Sinclair QL'},
 };
 
-module.exports = {PLATFORMS};
+const PLATFORMS_ARRAY = Object.entries(PLATFORMS).map(([id, info]) => ({id: +id, ...info}));
+
+module.exports = {PLATFORMS, PLATFORMS_ARRAY};

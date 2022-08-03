@@ -24,4 +24,6 @@ const GENRES = {
     36: {name: 'MOBA'},
 };
 
-module.exports = {GENRES};
+const GENRES_ARRAY = Object.entries(GENRES).map(([id, info]) => ({id: +id, ...info}));
+
+module.exports = {GENRES, GENRES_ARRAY};
