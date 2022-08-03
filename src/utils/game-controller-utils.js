@@ -4,7 +4,7 @@ const {GENRES} = require('../data/genres');
 const {PLATFORMS} = require('../data/platforms');
 const {Sort} = require('../enums/sort');
 const FIELDS =
-    'fields id,cover,first_release_date,genres,name,platforms,total_rating,total_rating_count,release_dates,screenshots,storyline,summary';
+    'fields status,id,cover,first_release_date,genres,name,platforms,total_rating,total_rating_count,release_dates,screenshots,storyline,summary';
 
 function generateInit(body) {
     return {
@@ -50,6 +50,7 @@ async function convertIgdbGamesToMyGames(igdbGames) {
         rating: Math.round(igdbGame.total_rating),
         ratingCount: igdbGame.total_rating_count,
         summary: igdbGame.summary,
+        status: igdbGame.status,
     }));
 }
 
@@ -117,11 +118,11 @@ function generateFiltersQuery(filters = {}) {
         queryParts.push('game.status = 0');
     }
 
-    if (Array.isArray(filters.platforms)) {
+    if (Array.isArray(filters.platforms) && filters.platforms.length > 0) {
         queryParts.push(`game.platforms = [${filters.platforms.join(',')}]`);
     }
 
-    if (Array.isArray(filters.genres)) {
+    if (Array.isArray(filters.genres) && filters.genres.length > 0) {
         queryParts.push(`game.genres = [${filters.genres.join(',')}]`);
     }
 

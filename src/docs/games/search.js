@@ -19,7 +19,7 @@ module.exports = {
                             },
                             offset: {
                                 type: 'number',
-                                example: 2,
+                                example: 0,
                             },
                             sort: {
                                 type: 'number',

@@ -66,8 +66,6 @@ async function search(req, res) {
             'limit 500'
         );
 
-        console.log(searchQueryParts);
-
         const searchResponse = await fetch(IGDB_API_SEARCH, generateInit(searchQueryParts));
         const searchData = await searchResponse.json();
 
