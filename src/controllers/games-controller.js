@@ -4,9 +4,8 @@ const {ErrorMessage} = require('../enums/error-message');
 const {sendError, tryCatch} = require('../utils/controller-utils');
 const {
     generateInit,
-    convertIgdbGameToMyGame,
     convertIgdbGamesToMyGames,
-    generateIgdbQuery,
+    combineIgdbQueries,
     generateSortQuery,
     generateFiltersQuery,
     GAME_FIELDS_QUERY,
@@ -32,7 +31,9 @@ async function one(req, res) {
         const query = `${GAME_FIELDS_QUERY}; where id = ${id};`;
         const response = await fetch(IGDB_API_GAMES, generateInit(query));
         const data = await response.json();
-        res.json({game: await convertIgdbGameToMyGame(data[0])});
+
+        const games = await convertIgdbGamesToMyGames(data);
+        res.json({game: games[0]});
     });
 }
 
@@ -60,7 +61,7 @@ async function search(req, res) {
     const {searchPhrase, pageSize, offset, sort, filters} = req.body;
 
     await tryCatch(res, async () => {
-        const searchQueryParts = generateIgdbQuery(
+        const searchQueryParts = combineIgdbQueries(
             'fields game',
             searchPhrase ? `search "${searchPhrase}"` : '',
             generateFiltersQuery(filters),
@@ -81,7 +82,7 @@ async function search(req, res) {
             return;
         }
 
-        const gamesQueryParts = generateIgdbQuery(
+        const gamesQueryParts = combineIgdbQueries(
             GAME_FIELDS_QUERY,
             `where id = (${gameIds.join(',')})`,
             `limit ${pageSize || 20}`,

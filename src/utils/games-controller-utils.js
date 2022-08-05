@@ -1,23 +1,49 @@
-const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 
-const {GENRES} = require('../data/genres');
-const {PLATFORMS} = require('../data/platforms');
 const {Sort} = require('../enums/sort');
 
 const GAME_FIELDS = [
     'id',
-    'cover',
+    'age_ratings.category',
+    'age_ratings.rating',
+    'cover.height',
+    'cover.image_id',
+    'cover.width',
     'first_release_date',
-    'genres',
+    'game_modes.name',
+    'genres.name',
+    'involved_companies.company.country',
+    'involved_companies.company.description',
+    'involved_companies.company.logo.height',
+    'involved_companies.company.logo.image_id',
+    'involved_companies.company.logo.width',
+    'involved_companies.company.name',
+    'involved_companies.company.url',
+    'involved_companies.company.websites.category',
+    'involved_companies.company.websites.trusted',
+    'involved_companies.company.websites.url',
+    'involved_companies.developer',
+    'involved_companies.porting',
+    'involved_companies.publisher',
+    'involved_companies.supporting',
+    'keywords.name',
     'name',
-    'platforms',
-    'total_rating',
-    'total_rating_count',
+    'platforms.name',
+    'player_perspectives.name',
     'release_dates',
-    'screenshots',
+    'screenshots.height',
+    'screenshots.image_id',
+    'screenshots.width',
     'storyline',
     'summary',
+    'themes.name',
+    'total_rating',
+    'total_rating_count',
+    'videos.video_id',
+    'videos.name',
+    'websites.category',
+    'websites.trusted',
+    'websites.url',
 ];
 
 const GAME_FIELDS_QUERY = `fields ${GAME_FIELDS.join(',')}`;
@@ -38,80 +64,31 @@ function generateInit(body) {
     };
 }
 
-async function convertIgdbGameToMyGame(igdbGame) {
-    const covers = await convertIgdbImagesToMyImages([igdbGame], true);
-    const screenshots = await convertIgdbImagesToMyImages([igdbGame], false);
-
-    return {
-        id: igdbGame.id,
-        cover: covers[igdbGame.id],
-        releaseDate: igdbGame.first_release_date * 1000,
-        genres: convertIgdbGenresToMyGenres(igdbGame.genres),
-        name: igdbGame.name,
-        platforms: convertIgdbPlatformsToMyPlatforms(igdbGame.platforms),
-        rating: Math.round(igdbGame.total_rating),
-        ratingCount: igdbGame.total_rating_count,
-        summary: igdbGame.summary,
-        screenshots: screenshots[igdbGame.id],
-        storyline: igdbGame.storyline,
-    };
-}
-
-async function convertIgdbGamesToMyGames(igdbGames) {
-    const covers = await convertIgdbImagesToMyImages(igdbGames, true);
-
-    return igdbGames.map((igdbGame) => ({
-        id: igdbGame.id,
-        cover: covers[igdbGame.id],
-        releaseDate: igdbGame.first_release_date * 1000,
-        genres: convertIgdbGenresToMyGenres(igdbGame.genres),
-        name: igdbGame.name,
-        platforms: convertIgdbPlatformsToMyPlatforms(igdbGame.platforms),
-        rating: Math.round(igdbGame.total_rating),
-        ratingCount: igdbGame.total_rating_count,
-        summary: igdbGame.summary,
+async function convertIgdbGamesToMyGames(games) {
+    return games.map((game) => ({
+        id: game.id,
+        ageRatings: game.age_ratings,
+        cover: game.cover,
+        gameModes: game.game_modes,
+        genres: game.genres,
+        involved_companies: game.involved_companies,
+        keywords: game.keywords,
+        name: game.name,
+        platforms: game.platforms,
+        playerPerspectives: game.player_perspectives,
+        rating: Math.round(game.total_rating),
+        ratingCount: game.total_rating_count,
+        releaseDate: game.first_release_date * 1000,
+        screenshots: game.screenshots,
+        storyline: game.storyline,
+        summary: game.summary,
+        themes: game.themes,
+        videos: game.videos,
+        websites: game.websites,
     }));
 }
 
-function convertIgdbGenresToMyGenres(igdbGameGenres) {
-    if (!igdbGameGenres) return [];
-    return igdbGameGenres.map((id) => GENRES[id].name);
-}
-
-function convertIgdbPlatformsToMyPlatforms(igdbGamePlatforms) {
-    if (!igdbGamePlatforms) return [];
-    return igdbGamePlatforms.map((id) => PLATFORMS[id].name);
-}
-
-async function convertIgdbImagesToMyImages(igdbGames, isCover) {
-    const ids = igdbGames.map((x) => x.id).join(',');
-    const response = await fetch(
-        `https://api.igdb.com/v4/${isCover ? 'covers' : 'screenshots'}`,
-        generateInit(`fields width,height,image_id,game; limit 500; sort id; where game = (${ids});`)
-    );
-
-    const data = await response.json();
-    const entries = data.map((x) => [
-        x.game,
-        {
-            id: x.image_id,
-            width: x.width,
-            height: x.height,
-        },
-    ]);
-
-    if (isCover) return Object.fromEntries(entries);
-
-    const images = {};
-    const uniqueIds = new Set(entries.map((x) => x[0]));
-    for (const id of uniqueIds) {
-        images[id] = entries.filter((x) => x[0] === id).map((x) => x[1]);
-    }
-
-    return images;
-}
-
-function generateIgdbQuery(...args) {
+function combineIgdbQueries(...args) {
     return args.filter(Boolean).join(';') + ';';
 }
 
@@ -160,9 +137,8 @@ module.exports = {
     GAME_FIELDS_QUERY,
     RELEASE_DATES_FIELDS_QUERY,
     generateInit,
-    convertIgdbGameToMyGame,
     convertIgdbGamesToMyGames,
-    generateIgdbQuery,
+    combineIgdbQueries,
     generateSortQuery,
     generateFiltersQuery,
 };
