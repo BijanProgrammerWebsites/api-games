@@ -4,8 +4,24 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const {GENRES} = require('../data/genres');
 const {PLATFORMS} = require('../data/platforms');
 const {Sort} = require('../enums/sort');
-const FIELDS =
-    'fields status,id,cover,first_release_date,genres,name,platforms,total_rating,total_rating_count,release_dates,screenshots,storyline,summary';
+
+const GAME_FIELDS = [
+    'id',
+    'cover',
+    'first_release_date',
+    'genres',
+    'name',
+    'platforms',
+    'total_rating',
+    'total_rating_count',
+    'release_dates',
+    'screenshots',
+    'storyline',
+    'summary',
+];
+
+const GAME_FIELDS_QUERY = `fields ${GAME_FIELDS.join(',')}`;
+const RELEASE_DATES_FIELDS_QUERY = `fields ${GAME_FIELDS.map((x) => `game.${x}`).join(',')}`;
 
 const proxyAgent = new HttpsProxyAgent(process.env.PROXY_SERVER_URL);
 
@@ -35,9 +51,9 @@ async function convertIgdbGameToMyGame(igdbGame) {
         platforms: convertIgdbPlatformsToMyPlatforms(igdbGame.platforms),
         rating: Math.round(igdbGame.total_rating),
         ratingCount: igdbGame.total_rating_count,
+        summary: igdbGame.summary,
         screenshots: screenshots[igdbGame.id],
         storyline: igdbGame.storyline,
-        summary: igdbGame.summary,
     };
 }
 
@@ -54,7 +70,6 @@ async function convertIgdbGamesToMyGames(igdbGames) {
         rating: Math.round(igdbGame.total_rating),
         ratingCount: igdbGame.total_rating_count,
         summary: igdbGame.summary,
-        status: igdbGame.status,
     }));
 }
 
@@ -142,7 +157,8 @@ function generateFiltersQuery(filters = {}) {
 }
 
 module.exports = {
-    FIELDS,
+    GAME_FIELDS_QUERY,
+    RELEASE_DATES_FIELDS_QUERY,
     generateInit,
     convertIgdbGameToMyGame,
     convertIgdbGamesToMyGames,
