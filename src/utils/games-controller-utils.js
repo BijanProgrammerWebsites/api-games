@@ -69,10 +69,10 @@ function convertIgdbGamesToMyGames(games) {
     return games.map((game) => ({
         id: game.id,
         ageRatings: game.age_ratings,
-        cover: convertIgdbImagesToMyImages([game.cover]),
+        cover: convertIgdbImagesToMyImages([game.cover])[0],
         gameModes: game.game_modes,
         genres: game.genres,
-        involvedCompanies: game.involved_companies,
+        involvedCompanies: convertIgdbInvolvedCompaniesToMyInvolvedCompanies(game.involved_companies),
         keywords: game.keywords,
         name: game.name,
         platforms: game.platforms,
@@ -90,6 +90,8 @@ function convertIgdbGamesToMyGames(games) {
 }
 
 function convertIgdbImagesToMyImages(images) {
+    if (!Array.isArray(images) || !images[0]) return [];
+
     return images.map((image) => ({
         id: image.image_id,
         width: image.width,
@@ -98,9 +100,23 @@ function convertIgdbImagesToMyImages(images) {
 }
 
 function convertIgdbVideosToMyVideos(videos) {
+    if (!Array.isArray(videos)) return [];
+
     return videos.map((video) => ({
         id: video.video_id,
         name: video.name,
+    }));
+}
+
+function convertIgdbInvolvedCompaniesToMyInvolvedCompanies(involvedCompanies) {
+    if (!Array.isArray(involvedCompanies)) return [];
+
+    return involvedCompanies.map((involvedCompany) => ({
+        ...involvedCompany,
+        company: {
+            ...involvedCompany.company,
+            logo: convertIgdbImagesToMyImages([involvedCompany.company.logo])[0],
+        },
     }));
 }
 
@@ -126,10 +142,6 @@ function generateSortQuery(sort) {
 function generateFiltersQuery(filters = {}) {
     const queryParts = ['game.total_rating != null'];
 
-    if (filters.status === true) {
-        queryParts.push('game.status = 0');
-    }
-
     if (Array.isArray(filters.genres) && filters.genres.length > 0) {
         queryParts.push(`game.genres = [${filters.genres.join(',')}]`);
     }
@@ -140,6 +152,14 @@ function generateFiltersQuery(filters = {}) {
 
     if (Array.isArray(filters.gameModes) && filters.gameModes.length > 0) {
         queryParts.push(`game.game_modes = [${filters.gameModes.join(',')}]`);
+    }
+
+    if (Array.isArray(filters.playerPerspectives) && filters.playerPerspectives.length > 0) {
+        queryParts.push(`game.player_perspectives = [${filters.playerPerspectives.join(',')}]`);
+    }
+
+    if (Array.isArray(filters.themes) && filters.themes.length > 0) {
+        queryParts.push(`game.themes = [${filters.themes.join(',')}]`);
     }
 
     if (Array.isArray(filters.keywords) && filters.keywords.length > 0) {

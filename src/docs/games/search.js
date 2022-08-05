@@ -11,7 +11,7 @@ module.exports = {
                         properties: {
                             searchPhrase: {
                                 type: 'string',
-                                example: 'Red Dead',
+                                example: 'red dead',
                             },
                             pageSize: {
                                 type: 'number',
@@ -29,31 +29,47 @@ module.exports = {
                             filters: {
                                 type: 'object',
                                 properties: {
-                                    status: {
-                                        type: 'boolean',
-                                        nullable: true,
-                                        example: true,
+                                    gameModes: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'number',
+                                        },
+                                        example: [2, 3],
                                     },
                                     genres: {
                                         type: 'array',
                                         items: {
                                             type: 'number',
                                         },
-                                        example: [5],
+                                        example: [5, 12],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'number',
+                                        },
+                                        example: [7, 9, 623],
                                     },
                                     platforms: {
                                         type: 'array',
                                         items: {
                                             type: 'number',
                                         },
-                                        example: [6],
+                                        example: [6, 48],
                                     },
-                                    gameModes: {
+                                    playerPerspectives: {
                                         type: 'array',
                                         items: {
                                             type: 'number',
                                         },
-                                        example: [3],
+                                        example: [1, 2],
+                                    },
+                                    themes: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'number',
+                                        },
+                                        example: [1, 38],
                                     },
                                     minimumRating: {
                                         type: 'number',
@@ -61,7 +77,7 @@ module.exports = {
                                     },
                                     maximumRating: {
                                         type: 'number',
-                                        example: 90,
+                                        example: 99,
                                     },
                                 },
                             },
@@ -77,7 +93,7 @@ module.exports = {
                 content: {
                     'application/json': {
                         schema: {
-                            $ref: '#/components/schemas/gameArray',
+                            $ref: '#/components/schemas/GameArray',
                         },
                     },
                 },
