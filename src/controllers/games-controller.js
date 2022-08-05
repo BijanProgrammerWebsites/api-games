@@ -6,6 +6,7 @@ const {
     GAME_FIELDS_QUERY,
     GENRES_FIELDS_QUERY,
     PLATFORMS_FIELDS_QUERY,
+    GAME_MODES_FIELDS_QUERY,
     RELEASE_DATES_FIELDS_QUERY,
     generateInit,
     convertIgdbGamesToMyGames,
@@ -18,6 +19,7 @@ const IGDB_API_GAMES = 'https://api.igdb.com/v4/games';
 const IGDB_API_RELEASE_DATES = 'https://api.igdb.com/v4/release_dates';
 const IGDB_API_GENRES = 'https://api.igdb.com/v4/genres';
 const IGDB_API_PLATFORMS = 'https://api.igdb.com/v4/platforms';
+const IGDB_API_GAME_MODES = 'https://api.igdb.com/v4/game_modes';
 const IGDB_API_SEARCH = 'https://api.igdb.com/v4/search';
 
 async function one(req, res) {
@@ -39,19 +41,21 @@ async function one(req, res) {
 }
 
 async function genres(req, res) {
-    await tryCatch(res, async () => {
-        const query = `${GENRES_FIELDS_QUERY}; sort id asc; limit 500;`;
-        const response = await fetch(IGDB_API_GENRES, generateInit(query));
-        const data = await response.json();
-
-        res.json(data);
-    });
+    await items(req, res, GENRES_FIELDS_QUERY, IGDB_API_GENRES);
 }
 
 async function platforms(req, res) {
+    await items(req, res, PLATFORMS_FIELDS_QUERY, IGDB_API_PLATFORMS);
+}
+
+async function gameModes(req, res) {
+    await items(req, res, GAME_MODES_FIELDS_QUERY, IGDB_API_GAME_MODES);
+}
+
+async function items(req, res, fields, api) {
     await tryCatch(res, async () => {
-        const query = `${PLATFORMS_FIELDS_QUERY}; sort id asc; limit 500;`;
-        const response = await fetch(IGDB_API_PLATFORMS, generateInit(query));
+        const query = `${fields}; sort id asc; limit 500;`;
+        const response = await fetch(api, generateInit(query));
         const data = await response.json();
 
         res.json(data);
@@ -85,7 +89,7 @@ async function search(req, res) {
         const searchData = await searchResponse.json();
 
         if (!searchResponse.ok) {
-            sendError(res, ErrorMessage.IGDB, 500, JSON.stringify(searchData, null, 4));
+            sendError(res, ErrorMessage.IGDB, 500, JSON.stringify(searchData));
             return;
         }
 
@@ -107,7 +111,7 @@ async function search(req, res) {
         const gamesData = await gamesResponse.json();
 
         if (!gamesResponse.ok) {
-            sendError(res, ErrorMessage.IGDB, 500, JSON.stringify(gamesData, null, 4));
+            sendError(res, ErrorMessage.IGDB, 500, JSON.stringify(gamesData));
             return;
         }
 
@@ -119,6 +123,7 @@ module.exports = {
     one,
     genres,
     platforms,
+    gameModes,
     upcoming,
     search,
 };

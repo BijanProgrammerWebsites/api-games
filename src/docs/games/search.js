@@ -34,6 +34,13 @@ module.exports = {
                                         nullable: true,
                                         example: true,
                                     },
+                                    genres: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'number',
+                                        },
+                                        example: [5],
+                                    },
                                     platforms: {
                                         type: 'array',
                                         items: {
@@ -41,12 +48,12 @@ module.exports = {
                                         },
                                         example: [6],
                                     },
-                                    genres: {
+                                    gameModes: {
                                         type: 'array',
                                         items: {
                                             type: 'number',
                                         },
-                                        example: [5],
+                                        example: [3],
                                     },
                                     minimumRating: {
                                         type: 'number',

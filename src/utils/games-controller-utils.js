@@ -49,6 +49,7 @@ const GAME_FIELDS = [
 const GAME_FIELDS_QUERY = `fields ${GAME_FIELDS.join(',')}`;
 const GENRES_FIELDS_QUERY = 'fields name';
 const PLATFORMS_FIELDS_QUERY = 'fields name';
+const GAME_MODES_FIELDS_QUERY = 'fields name';
 const RELEASE_DATES_FIELDS_QUERY = `fields ${GAME_FIELDS.map((x) => `game.${x}`).join(',')}`;
 
 const proxyAgent = new HttpsProxyAgent(process.env.PROXY_SERVER_URL);
@@ -124,6 +125,10 @@ function generateFiltersQuery(filters = {}) {
         queryParts.push(`game.genres = [${filters.genres.join(',')}]`);
     }
 
+    if (Array.isArray(filters.gameModes) && filters.gameModes.length > 0) {
+        queryParts.push(`game.game_modes = [${filters.gameModes.join(',')}]`);
+    }
+
     if (!isNaN(filters.minimumRating)) {
         queryParts.push(`game.total_rating >= ${filters.minimumRating}`);
     }
@@ -139,6 +144,7 @@ module.exports = {
     GAME_FIELDS_QUERY,
     GENRES_FIELDS_QUERY,
     PLATFORMS_FIELDS_QUERY,
+    GAME_MODES_FIELDS_QUERY,
     RELEASE_DATES_FIELDS_QUERY,
     generateInit,
     convertIgdbGamesToMyGames,
