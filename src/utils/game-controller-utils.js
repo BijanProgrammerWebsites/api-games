@@ -1,10 +1,13 @@
 const fetch = require('node-fetch');
+const HttpsProxyAgent = require('https-proxy-agent');
 
 const {GENRES} = require('../data/genres');
 const {PLATFORMS} = require('../data/platforms');
 const {Sort} = require('../enums/sort');
 const FIELDS =
     'fields status,id,cover,first_release_date,genres,name,platforms,total_rating,total_rating_count,release_dates,screenshots,storyline,summary';
+
+const proxyAgent = new HttpsProxyAgent(process.env.PROXY_SERVER_URL);
 
 function generateInit(body) {
     return {
@@ -14,6 +17,7 @@ function generateInit(body) {
             'Client-ID': process.env.IGDB_CLIENT_ID,
             Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
         },
+        agent: proxyAgent,
         body,
     };
 }
