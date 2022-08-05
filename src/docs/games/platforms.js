@@ -9,20 +9,7 @@ module.exports = {
                 content: {
                     'application/json': {
                         schema: {
-                            type: 'array',
-                            items: {
-                                type: 'object',
-                                properties: {
-                                    id: {
-                                        type: 'number',
-                                        example: 6,
-                                    },
-                                    name: {
-                                        type: 'string',
-                                        example: 'PC (Microsoft Windows)',
-                                    },
-                                },
-                            },
+                            $ref: '#/components/schemas/Items',
                         },
                     },
                 },

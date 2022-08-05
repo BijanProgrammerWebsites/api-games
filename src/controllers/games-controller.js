@@ -4,10 +4,8 @@ const {ErrorMessage} = require('../enums/error-message');
 const {sendError, tryCatch} = require('../utils/controller-utils');
 const {
     GAME_FIELDS_QUERY,
-    GENRES_FIELDS_QUERY,
-    PLATFORMS_FIELDS_QUERY,
-    GAME_MODES_FIELDS_QUERY,
     RELEASE_DATES_FIELDS_QUERY,
+    ITEMS_FIELDS_QUERY,
     generateInit,
     convertIgdbGamesToMyGames,
     combineIgdbQueries,
@@ -20,6 +18,8 @@ const IGDB_API_RELEASE_DATES = 'https://api.igdb.com/v4/release_dates';
 const IGDB_API_GENRES = 'https://api.igdb.com/v4/genres';
 const IGDB_API_PLATFORMS = 'https://api.igdb.com/v4/platforms';
 const IGDB_API_GAME_MODES = 'https://api.igdb.com/v4/game_modes';
+const IGDB_API_PLAYER_PERSPECTIVES = 'https://api.igdb.com/v4/player_perspectives';
+const IGDB_API_THEMES = 'https://api.igdb.com/v4/themes';
 const IGDB_API_SEARCH = 'https://api.igdb.com/v4/search';
 
 async function one(req, res) {
@@ -35,26 +35,34 @@ async function one(req, res) {
         const response = await fetch(IGDB_API_GAMES, generateInit(query));
         const data = await response.json();
 
-        const games = await convertIgdbGamesToMyGames(data);
+        const games = convertIgdbGamesToMyGames(data);
         res.json({game: games[0]});
     });
 }
 
 async function genres(req, res) {
-    await items(req, res, GENRES_FIELDS_QUERY, IGDB_API_GENRES);
+    await items(req, res, IGDB_API_GENRES);
 }
 
 async function platforms(req, res) {
-    await items(req, res, PLATFORMS_FIELDS_QUERY, IGDB_API_PLATFORMS);
+    await items(req, res, IGDB_API_PLATFORMS);
 }
 
 async function gameModes(req, res) {
-    await items(req, res, GAME_MODES_FIELDS_QUERY, IGDB_API_GAME_MODES);
+    await items(req, res, IGDB_API_GAME_MODES);
 }
 
-async function items(req, res, fields, api) {
+async function playerPerspectives(req, res) {
+    await items(req, res, IGDB_API_PLAYER_PERSPECTIVES);
+}
+
+async function themes(req, res) {
+    await items(req, res, IGDB_API_THEMES);
+}
+
+async function items(req, res, api) {
     await tryCatch(res, async () => {
-        const query = `${fields}; sort id asc; limit 500;`;
+        const query = `${ITEMS_FIELDS_QUERY}; sort id asc; limit 500;`;
         const response = await fetch(api, generateInit(query));
         const data = await response.json();
 
@@ -70,7 +78,7 @@ async function upcoming(req, res) {
         const data = await response.json();
 
         const games = data.map((x) => x.game);
-        res.json({games: await convertIgdbGamesToMyGames(games)});
+        res.json({games: convertIgdbGamesToMyGames(games)});
     });
 }
 
@@ -124,6 +132,8 @@ module.exports = {
     genres,
     platforms,
     gameModes,
+    playerPerspectives,
+    themes,
     upcoming,
     search,
 };

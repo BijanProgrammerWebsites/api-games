@@ -1,11 +1,11 @@
 module.exports = {
     get: {
         tags: ['game'],
-        description: 'Get all genres',
-        operationId: 'gameGetGenres',
+        description: 'Get all player perspectives',
+        operationId: 'gameGetPlayerPerspectives',
         responses: {
             200: {
-                description: 'Genres found successfully',
+                description: 'Player perspectives found successfully',
                 content: {
                     'application/json': {
                         schema: {

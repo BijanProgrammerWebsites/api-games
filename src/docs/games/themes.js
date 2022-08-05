@@ -1,11 +1,11 @@
 module.exports = {
     get: {
         tags: ['game'],
-        description: 'Get all genres',
-        operationId: 'gameGetGenres',
+        description: 'Get all themes',
+        operationId: 'gameGetThemes',
         responses: {
             200: {
-                description: 'Genres found successfully',
+                description: 'Themes found successfully',
                 content: {
                     'application/json': {
                         schema: {

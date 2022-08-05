@@ -98,6 +98,38 @@ module.exports = {
                         type: 'number',
                         example: 25076,
                     },
+                    ageRatings: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                id: {
+                                    type: 'number',
+                                    example: 23550,
+                                },
+                                category: {
+                                    type: 'number',
+                                    example: 1,
+                                },
+                                rating: {
+                                    type: 'number',
+                                    example: 11,
+                                },
+                            },
+                        },
+                        example: [
+                            {
+                                id: 23550,
+                                category: 1,
+                                rating: 11,
+                            },
+                            {
+                                id: 26094,
+                                category: 2,
+                                rating: 5,
+                            },
+                        ],
+                    },
                     cover: {
                         $ref: '#/components/schemas/Image',
                         example: {
@@ -106,35 +138,173 @@ module.exports = {
                             height: 800,
                         },
                     },
-                    releaseDate: {
-                        type: 'number',
-                        example: 1540512000000,
+                    gameModes: {
+                        $ref: '#/components/schemas/Items',
+                        example: [
+                            {
+                                id: 1,
+                                name: 'Single player',
+                            },
+                            {
+                                id: 2,
+                                name: 'Multiplayer',
+                            },
+                            {
+                                id: 3,
+                                name: 'Co-operative',
+                            },
+                        ],
                     },
                     genres: {
-                        type: 'array',
-                        items: {
-                            type: 'string',
-                        },
-                        example: ['Shooter', 'Role-playing (RPG)', 'Adventure'],
+                        $ref: '#/components/schemas/Items',
+                        example: [
+                            {
+                                id: 5,
+                                name: 'Shooter',
+                            },
+                            {
+                                id: 12,
+                                name: 'Role-playing (RPG)',
+                            },
+                            {
+                                id: 31,
+                                name: 'Adventure',
+                            },
+                        ],
+                    },
+                    involvedCompanies: {
+                        $ref: '#/components/schemas/InvolvedCompanies',
+                        examples: [
+                            {
+                                id: 40855,
+                                company: {
+                                    id: 139,
+                                    country: 840,
+                                    description:
+                                        'Headquartered in New York City, Take-Two Interactive Software, Inc. is a leading developer, marketer and publisher of interactive entertainment for consumers around the globe. The Company develops and publishes products through its two wholly-owned labels Rockstar Games and 2K. Our products are designed for console systems, handheld gaming systems and personal computers, including smartphones and tablets, and are delivered through physical retail, digital download, online platforms and cloud streaming services. The Company’s common stock is publicly traded on NASDAQ under the symbol TTWO.',
+                                    logo: {
+                                        id: 37,
+                                        height: 358,
+                                        image_id: 'aqtxrprtkcftl7m8yn0t',
+                                        width: 500,
+                                    },
+                                    name: 'Take-Two Interactive',
+                                    url: 'https://www.igdb.com/companies/take-two-interactive',
+                                    websites: [
+                                        {
+                                            id: 784,
+                                            category: 1,
+                                            trusted: false,
+                                            url: 'http://www.take2games.com/',
+                                        },
+                                    ],
+                                },
+                                developer: false,
+                                porting: false,
+                                publisher: true,
+                                supporting: false,
+                            },
+                            {
+                                id: 98112,
+                                company: {
+                                    id: 29,
+                                    country: 840,
+                                    logo: {
+                                        id: 6,
+                                        height: 1840,
+                                        image_id: 'wcqgg7udjjtzxjsqfnfi',
+                                        width: 2000,
+                                    },
+                                    name: 'Rockstar Games',
+                                    url: 'https://www.igdb.com/companies/rockstar-games',
+                                    websites: [
+                                        {
+                                            id: 401,
+                                            category: 1,
+                                            trusted: false,
+                                            url: 'http://www.rockstargames.com/',
+                                        },
+                                        {
+                                            id: 4311,
+                                            category: 1,
+                                            trusted: false,
+                                            url: 'https://www.rockstargames.com',
+                                        },
+                                    ],
+                                },
+                                developer: true,
+                                porting: false,
+                                publisher: true,
+                                supporting: false,
+                            },
+                        ],
+                    },
+                    keywords: {
+                        $ref: '#/components/schemas/Items',
+                        example: [
+                            {
+                                id: 7,
+                                name: 'cowboys',
+                            },
+                            {
+                                id: 9,
+                                name: 'western',
+                            },
+                            {
+                                id: 623,
+                                name: 'horse',
+                            },
+                        ],
                     },
                     name: {
                         type: 'string',
                         example: 'Red Dead Redemption 2',
                     },
                     platforms: {
-                        type: 'array',
-                        items: {
-                            type: 'string',
-                        },
-                        example: ['PC (Microsoft Windows)', 'PlayStation 4', 'Xbox One', 'Google Stadia'],
+                        $ref: '#/components/schemas/Items',
+                        example: [
+                            {
+                                id: 6,
+                                name: 'PC (Microsoft Windows)',
+                            },
+                            {
+                                id: 48,
+                                name: 'PlayStation 4',
+                            },
+                            {
+                                id: 49,
+                                name: 'Xbox One',
+                            },
+                            {
+                                id: 170,
+                                name: 'Google Stadia',
+                            },
+                        ],
+                    },
+                    playerPerspectives: {
+                        $ref: '#/components/schemas/Items',
+                        example: [
+                            {
+                                id: 1,
+                                name: 'First person',
+                            },
+                            {
+                                id: 2,
+                                name: 'Third person',
+                            },
+                        ],
                     },
                     rating: {
                         type: 'number',
-                        example: 92.36,
+                        example: 93,
                     },
                     ratingCount: {
                         type: 'number',
-                        example: 1422,
+                        example: 1451,
+                    },
+                    releaseDate: {
+                        type: 'number',
+                        example: 1540512000000,
                     },
                     screenshots: {
                         type: 'array',
@@ -157,51 +327,6 @@ module.exports = {
                                 width: 1920,
                                 height: 1080,
                             },
-                            {
-                                id: 'x8xczj2a0y6g9rnhboko',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'dhw6ucx9laj5esv6rngn',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'h8f9uojkzvaau8pxsyxi',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'tdxv4zzkqyjnm9pmwxw0',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'kcfpf8wa8esalk0qkpo5',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'uyaminfh8sugglvt247u',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'banftd8fgfytbsfx6mjz',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'dorsz0jbcecmkxvzi3t8',
-                                width: 1920,
-                                height: 1080,
-                            },
-                            {
-                                id: 'mptosgjarjlyqxy7lqsm',
-                                width: 1920,
-                                height: 1080,
-                            },
                         ],
                     },
                     storyline: {
@@ -213,6 +338,66 @@ module.exports = {
                         type: 'string',
                         example:
                             'Red Dead Redemption 2 is the epic tale of outlaw Arthur Morgan and the infamous Van der Linde gang, on the run across America at the dawn of the modern age.',
+                    },
+                    themes: {
+                        $ref: '#/components/schemas/Items',
+                        example: [
+                            {
+                                id: 1,
+                                name: 'Action',
+                            },
+                            {
+                                id: 31,
+                                name: 'Drama',
+                            },
+                            {
+                                id: 38,
+                                name: 'Open world',
+                            },
+                        ],
+                    },
+                    videos: {
+                        type: 'array',
+                        items: {
+                            $ref: '#/components/schemas/Video',
+                        },
+                        example: [
+                            {
+                                id: 'HVRzx17WHVk',
+                                name: 'Launch Trailer',
+                            },
+                            {
+                                id: 'Dw_oH5oiUSE',
+                                name: 'Trailer',
+                            },
+                            {
+                                id: '9_GsrTCslQ4',
+                                name: 'Official Trailer 3',
+                            },
+                        ],
+                    },
+                    websites: {
+                        $ref: '#/components/schemas/Websites',
+                        example: [
+                            {
+                                id: 50776,
+                                category: 1,
+                                trusted: false,
+                                url: 'https://www.rockstargames.com/reddeadredemption2/',
+                            },
+                            {
+                                id: 50777,
+                                category: 2,
+                                trusted: false,
+                                url: 'http://reddead.wikia.com/wiki/Red_Dead_Redemption_2',
+                            },
+                            {
+                                id: 50778,
+                                category: 3,
+                                trusted: true,
+                                url: 'https://en.wikipedia.org/wiki/Red_Dead_Redemption_2',
+                            },
+                        ],
                     },
                 },
             },
@@ -242,6 +427,125 @@ module.exports = {
                         type: 'number',
                         example: 800,
                     },
+                },
+            },
+            Video: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        example: 'HVRzx17WHVk',
+                    },
+                    name: {
+                        type: 'string',
+                        example: 'Launch Trailer',
+                    },
+                },
+            },
+            Items: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        id: {
+                            type: 'number',
+                            example: 5,
+                        },
+                        name: {
+                            type: 'string',
+                            example: 'Shooter',
+                        },
+                    },
+                },
+            },
+            Company: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'number',
+                        example: 139,
+                    },
+                    country: {
+                        type: 'number',
+                        example: 840,
+                    },
+                    description: {
+                        type: 'string ',
+                        example:
+                            'Headquartered in New York City, Take-Two Interactive Software, Inc. is a leading developer, marketer and publisher of interactive entertainment for consumers around the globe. The Company develops and publishes products through its two wholly-owned labels Rockstar Games and 2K. Our products are designed for console systems, handheld gaming systems and personal computers, including smartphones and tablets, and are delivered through physical retail, digital download, online platforms and cloud streaming services. The Company’s common stock is publicly traded on NASDAQ under the symbol TTWO.',
+                    },
+                    logo: {
+                        $ref: '#/components/schemas/Image',
+                    },
+                    name: {
+                        type: 'string',
+                        example: 'Take-Two Interactive',
+                    },
+                    url: {
+                        type: 'string',
+                        example: 'https://www.igdb.com/companies/take-two-interactive',
+                    },
+                    websites: {
+                        $ref: '#/components/schemas/Websites',
+                    },
+                },
+            },
+            InvolvedCompanies: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        id: {
+                            type: 'number',
+                            example: 40855,
+                        },
+                        developer: {
+                            type: 'boolean',
+                            example: false,
+                        },
+                        porting: {
+                            type: 'boolean',
+                            example: false,
+                        },
+                        publisher: {
+                            type: 'boolean',
+                            example: true,
+                        },
+                        supporting: {
+                            type: 'boolean',
+                            example: false,
+                        },
+                        company: {
+                            $ref: '#/components/schemas/Company',
+                        },
+                    },
+                },
+            },
+            Website: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'number',
+                        example: 784,
+                    },
+                    category: {
+                        type: 'number',
+                        example: 1,
+                    },
+                    trusted: {
+                        type: 'boolean',
+                        example: false,
+                    },
+                    url: {
+                        type: 'string',
+                        example: 'https://www.igdb.com/companies/take-two-interactive',
+                    },
+                },
+            },
+            Websites: {
+                type: 'array',
+                items: {
+                    $ref: '#/components/schemas/Website',
                 },
             },
             Error: {
