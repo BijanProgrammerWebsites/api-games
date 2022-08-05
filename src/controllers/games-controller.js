@@ -3,21 +3,22 @@ const fetch = require('node-fetch');
 const {ErrorMessage} = require('../enums/error-message');
 const {sendError, tryCatch} = require('../utils/controller-utils');
 const {
+    GAME_FIELDS_QUERY,
+    GENRES_FIELDS_QUERY,
+    PLATFORMS_FIELDS_QUERY,
+    RELEASE_DATES_FIELDS_QUERY,
     generateInit,
     convertIgdbGamesToMyGames,
     combineIgdbQueries,
     generateSortQuery,
     generateFiltersQuery,
-    GAME_FIELDS_QUERY,
-    RELEASE_DATES_FIELDS_QUERY,
 } = require('../utils/games-controller-utils');
 
-const {GENRES_ARRAY} = require('../data/genres');
-const {PLATFORMS_ARRAY} = require('../data/platforms');
-
 const IGDB_API_GAMES = 'https://api.igdb.com/v4/games';
-const IGDB_API_SEARCH = 'https://api.igdb.com/v4/search';
 const IGDB_API_RELEASE_DATES = 'https://api.igdb.com/v4/release_dates';
+const IGDB_API_GENRES = 'https://api.igdb.com/v4/genres';
+const IGDB_API_PLATFORMS = 'https://api.igdb.com/v4/platforms';
+const IGDB_API_SEARCH = 'https://api.igdb.com/v4/search';
 
 async function one(req, res) {
     const {id} = req.params;
@@ -38,11 +39,23 @@ async function one(req, res) {
 }
 
 async function genres(req, res) {
-    res.json(GENRES_ARRAY);
+    await tryCatch(res, async () => {
+        const query = `${GENRES_FIELDS_QUERY}; sort id asc; limit 500;`;
+        const response = await fetch(IGDB_API_GENRES, generateInit(query));
+        const data = await response.json();
+
+        res.json(data);
+    });
 }
 
 async function platforms(req, res) {
-    res.json(PLATFORMS_ARRAY);
+    await tryCatch(res, async () => {
+        const query = `${PLATFORMS_FIELDS_QUERY}; sort id asc; limit 500;`;
+        const response = await fetch(IGDB_API_PLATFORMS, generateInit(query));
+        const data = await response.json();
+
+        res.json(data);
+    });
 }
 
 async function upcoming(req, res) {
