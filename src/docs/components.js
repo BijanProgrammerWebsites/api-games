@@ -130,6 +130,29 @@ module.exports = {
                             },
                         ],
                     },
+                    artworks: {
+                        type: 'array',
+                        items: {
+                            $ref: '#/components/schemas/Image',
+                        },
+                        example: [
+                            {
+                                id: 'hzaj3aqkbxmb6hd7k7lc',
+                                width: 3840,
+                                height: 2160,
+                            },
+                            {
+                                id: 'cuzmozb8widfr9aj8trf',
+                                width: 3840,
+                                height: 2160,
+                            },
+                            {
+                                id: 'asdntchzmz1kf3k0t79l',
+                                width: 3840,
+                                height: 2160,
+                            },
+                        ],
+                    },
                     cover: {
                         $ref: '#/components/schemas/Image',
                         example: {

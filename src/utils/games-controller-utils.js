@@ -6,6 +6,9 @@ const GAME_FIELDS = [
     'id',
     'age_ratings.category',
     'age_ratings.rating',
+    'artworks.height',
+    'artworks.image_id',
+    'artworks.width',
     'cover.height',
     'cover.image_id',
     'cover.width',
@@ -69,6 +72,7 @@ function convertIgdbGamesToMyGames(games) {
     return games.map((game) => ({
         id: game.id,
         ageRatings: game.age_ratings,
+        artworks: convertIgdbImagesToMyImages(game.artworks),
         cover: convertIgdbImagesToMyImages([game.cover])[0],
         gameModes: game.game_modes,
         genres: game.genres,
