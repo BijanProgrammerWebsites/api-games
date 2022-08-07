@@ -6,7 +6,8 @@
     "scripts": {
         "start": "node src/app.js",
         "dev": "nodemon src/app.js",
-        "renew": "node src/database/renew.js"
+        "renew": "node src/database/renew.js",
+        "migrate:01": "node src/database/migrate-01.js"
     },
     "author": "BijanProgrammer",
     "dependencies": {

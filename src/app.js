@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const {connect} = require('./database/connect');
 
 const userRouter = require('./routers/user');
+const listRouter = require('./routers/list');
 const gamesRouter = require('./routers/games');
 const docs = require('./docs/index');
 
@@ -36,6 +37,25 @@ const main = async () => {
 
     // routes
     router.use('/user', userRouter);
+
+    router.use(
+        '/wishlist',
+        (req, res, next) => {
+            req.list = 'wishlist';
+            next();
+        },
+        listRouter
+    );
+
+    router.use(
+        '/favorites',
+        (req, res, next) => {
+            req.list = 'favorites';
+            next();
+        },
+        listRouter
+    );
+
     router.use('/', gamesRouter);
     router.use('/', swaggerUi.serve, swaggerUi.setup(docs, SWAGGER_OPTIONS));
 
