@@ -81,6 +81,8 @@ function convertIgdbGamesToMyGames(games) {
         name: game.name,
         platforms: game.platforms,
         playerPerspectives: game.player_perspectives,
+        price: Math.round((game.total_rating * 20 + game.total_rating_count / 2) / 10) * 10_000,
+        priceOnSale: Math.round((game.total_rating * 20) / 10) * 10_000,
         rating: Math.round(game.total_rating),
         ratingCount: game.total_rating_count,
         releaseDate: game.first_release_date * 1000,

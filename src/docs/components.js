@@ -317,6 +317,14 @@ module.exports = {
                             },
                         ],
                     },
+                    price: {
+                        type: 'number',
+                        example: 2590000,
+                    },
+                    priceOnSale: {
+                        type: 'number',
+                        example: 1860000,
+                    },
                     rating: {
                         type: 'number',
                         example: 93,
