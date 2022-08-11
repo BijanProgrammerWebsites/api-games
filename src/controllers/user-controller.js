@@ -84,7 +84,7 @@ async function login(req, res) {
 }
 
 async function alter(req, res) {
-    const fields = ['username', 'email', 'firstName', 'lastName', 'password', 'avatar', 'gender', 'birthDate'];
+    const fields = ['username', 'email', 'phone', 'firstName', 'lastName', 'password', 'avatar', 'gender', 'birthDate'];
     const validFields = fields.filter((f) => !!req.body[f]);
 
     if (validFields.length === 0) {
