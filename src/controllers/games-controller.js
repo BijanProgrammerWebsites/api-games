@@ -75,7 +75,7 @@ async function items(req, res, api) {
 async function upcoming(req, res) {
     await tryCatch(res, async () => {
         const minimumDate = Math.floor(new Date() / 1000) - 180 * 24 * 3600;
-        const query = `${RELEASE_DATES_FIELDS_QUERY}; where date >= ${minimumDate} & game.total_rating != null; sort date asc;`;
+        const query = `${RELEASE_DATES_FIELDS_QUERY}; where date >= ${minimumDate} & game.total_rating != null; sort date asc; limit 20;`;
         const response = await fetch(IGDB_API_RELEASE_DATES, generateInit(query));
         const data = await response.json();
 
