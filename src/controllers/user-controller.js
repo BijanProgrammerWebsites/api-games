@@ -107,7 +107,7 @@ async function alter(req, res) {
         const [, id] = await verifyTokenQuery(req, res, query1, options, ErrorMessage.USER_NOT_FOUND);
         await query(res, query2, [...values, id]);
 
-        res.send();
+        res.send({});
     });
 }
 
