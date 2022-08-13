@@ -4,7 +4,6 @@ const {ErrorMessage} = require('../enums/error-message');
 const {sendError, tryCatch} = require('../utils/controller-utils');
 const {
     GAME_FIELDS_QUERY,
-    RELEASE_DATES_FIELDS_QUERY,
     ITEMS_FIELDS_QUERY,
     generateInit,
     convertIgdbGamesToMyGames,
@@ -15,7 +14,6 @@ const {
 
 const {
     IGDB_API_GAMES,
-    IGDB_API_RELEASE_DATES,
     IGDB_API_GENRES,
     IGDB_API_PLATFORMS,
     IGDB_API_GAME_MODES,
@@ -74,13 +72,12 @@ async function items(req, res, api) {
 
 async function upcoming(req, res) {
     await tryCatch(res, async () => {
-        const minimumDate = Math.floor(new Date() / 1000) - 180 * 24 * 3600;
-        const query = `${RELEASE_DATES_FIELDS_QUERY}; where date >= ${minimumDate} & game.total_rating != null; sort date asc; limit 20;`;
-        const response = await fetch(IGDB_API_RELEASE_DATES, generateInit(query));
+        const minimumDate = Math.floor(new Date() / 1000) - 30 * 24 * 3600;
+        const query = `${GAME_FIELDS_QUERY}; where first_release_date >= ${minimumDate} & total_rating != null; sort first_release_date asc; limit 20;`;
+        const response = await fetch(IGDB_API_GAMES, generateInit(query));
         const data = await response.json();
 
-        const games = data.map((x) => x.game);
-        res.json({games: convertIgdbGamesToMyGames(games)});
+        res.json({games: convertIgdbGamesToMyGames(data)});
     });
 }
 
