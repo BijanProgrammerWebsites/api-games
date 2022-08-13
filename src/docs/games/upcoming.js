@@ -9,10 +9,7 @@ module.exports = {
                 content: {
                     'application/json': {
                         schema: {
-                            type: 'array',
-                            items: {
-                                $ref: '#/components/schemas/Game',
-                            },
+                            $ref: '#/components/schemas/GameArray',
                         },
                     },
                 },
