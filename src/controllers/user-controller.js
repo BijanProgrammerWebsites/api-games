@@ -96,7 +96,7 @@ async function alter(req, res) {
         'dateOfBirth',
         'credit',
     ];
-    const validFields = fields.filter((f) => !!req.body[f] || req.body[f] === 0);
+    const validFields = fields.filter((f) => !!req.body[f] || req.body[f] === '' || req.body[f] === 0);
 
     if (validFields.length === 0) {
         sendError(res, ErrorMessage.USER_AT_LEAST_ONE_FIELD_REQUIRED, 400);
