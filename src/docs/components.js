@@ -46,7 +46,7 @@ module.exports = {
                     },
                     credit: {
                         type: 'number',
-                        example: 4815162342,
+                        example: 2147483647,
                     },
                 },
             },
@@ -95,7 +95,7 @@ module.exports = {
                     },
                     credit: {
                         type: 'number',
-                        example: 4815162342,
+                        example: 2147483647,
                     },
                 },
             },

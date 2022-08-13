@@ -12,7 +12,7 @@ module.exports = {
                             token: {
                                 type: 'string',
                                 example:
-                                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsImlhdCI6MTYyODA4OTA4MX0.zoA5YYtuexiVBlhUQn7uzvxg8_YQxLe339Xo_4sFv60',
+                                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwMzY3NjAyfQ.bBsG3w_tmAfMUGQCNMrbkfZteozxfpL3eq03WlJ_FSA',
                             },
                             username: {
                                 type: 'string',
@@ -52,7 +52,7 @@ module.exports = {
                             },
                             credit: {
                                 type: 'number',
-                                example: 4815162342,
+                                example: 2147483647,
                             },
                         },
                         required: ['token'],
@@ -63,6 +63,13 @@ module.exports = {
         responses: {
             200: {
                 description: "User's info changed successfully",
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                        },
+                    },
+                },
             },
             400: {
                 description: 'Bad request',
