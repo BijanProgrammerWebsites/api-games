@@ -93,7 +93,7 @@ async function alter(req, res) {
         'password',
         'avatar',
         'gender',
-        'birthDate',
+        'dateOfBirth',
         'credit',
     ];
     const validFields = fields.filter((f) => !!req.body[f] || req.body[f] === 0);
