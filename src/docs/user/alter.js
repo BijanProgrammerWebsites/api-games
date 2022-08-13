@@ -50,6 +50,10 @@ module.exports = {
                                 type: 'string',
                                 example: 'base64',
                             },
+                            credit: {
+                                type: 'number',
+                                example: 4815162342,
+                            },
                         },
                         required: ['token'],
                     },

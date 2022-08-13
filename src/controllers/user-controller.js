@@ -84,8 +84,19 @@ async function login(req, res) {
 }
 
 async function alter(req, res) {
-    const fields = ['username', 'email', 'phone', 'firstName', 'lastName', 'password', 'avatar', 'gender', 'birthDate'];
-    const validFields = fields.filter((f) => !!req.body[f]);
+    const fields = [
+        'username',
+        'email',
+        'phone',
+        'firstName',
+        'lastName',
+        'password',
+        'avatar',
+        'gender',
+        'birthDate',
+        'credit',
+    ];
+    const validFields = fields.filter((f) => !!req.body[f] || req.body[f] === 0);
 
     if (validFields.length === 0) {
         sendError(res, ErrorMessage.USER_AT_LEAST_ONE_FIELD_REQUIRED, 400);
