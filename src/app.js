@@ -39,23 +39,16 @@ const main = async () => {
     // routes
     router.use('/user', userRouter);
 
-    router.use(
-        '/wishlist',
-        (req, res, next) => {
-            req.list = 'wishlist';
-            next();
-        },
-        listRouter
-    );
-
-    router.use(
-        '/favorites',
-        (req, res, next) => {
-            req.list = 'favorites';
-            next();
-        },
-        listRouter
-    );
+    ['wishlist', 'favorites', 'library'].forEach((x) => {
+        router.use(
+            `/${x}`,
+            (req, res, next) => {
+                req.list = x;
+                next();
+            },
+            listRouter
+        );
+    });
 
     router.use('/', gamesRouter);
     router.use('/', swaggerUi.serve, swaggerUi.setup(docs, SWAGGER_OPTIONS));

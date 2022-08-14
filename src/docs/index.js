@@ -15,5 +15,6 @@ module.exports = {
         ...games.paths,
         ...generatePaths('wishlist'),
         ...generatePaths('favorites'),
+        ...generatePaths('library'),
     },
 };

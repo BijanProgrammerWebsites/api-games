@@ -6,9 +6,10 @@
     "scripts": {
         "start": "node src/app.js",
         "dev": "nodemon src/app.js",
-        "renew": "node src/database/renew.js & npm run migrate:01 & npm run migrate:02",
+        "renew": "node src/database/renew.js & npm run migrate:01 & npm run migrate:02 & npm run migrate:03",
         "migrate:01": "node src/database/migrate-01.js",
-        "migrate:02": "node src/database/migrate-02.js"
+        "migrate:02": "node src/database/migrate-02.js",
+        "migrate:03": "node src/database/migrate-03.js"
     },
     "author": "BijanProgrammer",
     "dependencies": {
