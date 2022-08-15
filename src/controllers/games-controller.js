@@ -21,6 +21,7 @@ const {
     IGDB_API_THEMES,
     IGDB_API_SEARCH,
 } = require('../utils/api-utils');
+const {BANNERS} = require('../data/banners');
 
 async function one(req, res) {
     const {id} = req.params;
@@ -126,6 +127,10 @@ async function search(req, res) {
     });
 }
 
+async function banners(req, res) {
+    res.json(BANNERS);
+}
+
 module.exports = {
     one,
     genres,
@@ -135,4 +140,5 @@ module.exports = {
     themes,
     upcoming,
     search,
+    banners,
 };

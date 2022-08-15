@@ -6,6 +6,7 @@ const playerPerspectives = require('./player-perspectives');
 const themes = require('./themes');
 const upcoming = require('./upcoming');
 const search = require('./search');
+const banners = require('./banners');
 
 module.exports = {
     paths: {
@@ -17,5 +18,6 @@ module.exports = {
         '/themes': {...themes},
         '/upcoming': {...upcoming},
         '/search': {...search},
+        '/banners': {...banners},
     },
 };

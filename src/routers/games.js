@@ -8,6 +8,7 @@ const {
     themes,
     upcoming,
     search,
+    banners,
 } = require('../controllers/games-controller');
 
 const router = express.Router();
@@ -20,5 +21,7 @@ router.get('/player-perspectives', playerPerspectives);
 router.get('/themes', themes);
 router.get('/upcoming', upcoming);
 router.post('/search', search);
+
+router.get('/banners', banners);
 
 module.exports = router;
