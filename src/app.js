@@ -25,7 +25,7 @@ const main = async () => {
     const router = express.Router();
 
     // parse middlewares
-    router.use(express.json());
+    router.use(express.json({limit: '5mb'}));
     router.use(express.static('public'));
 
     // cors
