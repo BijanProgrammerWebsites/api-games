@@ -84,18 +84,7 @@ async function login(req, res) {
 }
 
 async function alter(req, res) {
-    const fields = [
-        'username',
-        'email',
-        'phone',
-        'firstName',
-        'lastName',
-        'password',
-        'avatar',
-        'gender',
-        'dateOfBirth',
-        'credit',
-    ];
+    const fields = ['username', 'email', 'phone', 'firstName', 'lastName', 'avatar', 'gender', 'dateOfBirth', 'credit'];
     const validFields = fields.filter((f) => !!req.body[f] || req.body[f] === '' || req.body[f] === 0);
 
     if (validFields.length === 0) {
@@ -111,12 +100,36 @@ async function alter(req, res) {
     query2 = query2.slice(0, query2.length - 1);
     query2 += ' WHERE id = ?';
 
-    if (req.body.password) req.body.password = await hash(req.body.password);
     const values = validFields.map((f) => req.body[f]);
 
     await tryCatch(res, async () => {
         const [, id] = await verifyTokenQuery(req, res, query1, options, ErrorMessage.USER_NOT_FOUND);
         await query(res, query2, [...values, id]);
+
+        res.send({});
+    });
+}
+
+async function changePassword(req, res) {
+    const {currentPassword, newPassword} = req.body;
+
+    if (!currentPassword || !newPassword) {
+        sendError(res, ErrorMessage.USER_ALL_CREDENTIALS_REQUIRED, 400);
+        return;
+    }
+
+    const query1 = 'SELECT password FROM user WHERE id = ?';
+    const options = (x) => x;
+
+    const query2 = 'UPDATE user SET password = ? WHERE id = ?';
+
+    await tryCatch(res, async () => {
+        const [[{password}], id] = await verifyTokenQuery(req, res, query1, options, ErrorMessage.USER_NOT_FOUND);
+
+        await hashCompare(res, currentPassword, password);
+
+        const hashedNewPassword = await hash(newPassword);
+        await query(res, query2, [hashedNewPassword, id]);
 
         res.send({});
     });
@@ -128,4 +141,5 @@ module.exports = {
     register,
     login,
     alter,
+    changePassword,
 };

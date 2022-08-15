@@ -22,9 +22,9 @@ const hash = (word) => {
     });
 };
 
-const hashCompare = (res, word, hashed) => {
+const hashCompare = (res, normal, hashed) => {
     return new Promise((resolve, reject) => {
-        bcrypt.compare(word, hashed, (err, result) => {
+        bcrypt.compare(normal, hashed, (err, result) => {
             if (err || !result) {
                 sendError(res, ErrorMessage.AUTHENTICATION_FAILED, 401);
                 return reject();

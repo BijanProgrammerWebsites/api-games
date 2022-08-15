@@ -1,8 +1,8 @@
 module.exports = {
     post: {
         tags: ['user'],
-        description: "Changes user's info; At least one field is required",
-        operationId: 'userPostAlter',
+        description: "Changes user's password",
+        operationId: 'userPostChangePassword',
         requestBody: {
             content: {
                 'application/json': {
@@ -14,51 +14,23 @@ module.exports = {
                                 example:
                                     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwMzY3NjAyfQ.bBsG3w_tmAfMUGQCNMrbkfZteozxfpL3eq03WlJ_FSA',
                             },
-                            username: {
+                            currentPassword: {
                                 type: 'string',
-                                example: 'Test',
+                                example: '1234',
                             },
-                            email: {
+                            newPassword: {
                                 type: 'string',
-                                example: 'test@gmail.com',
-                            },
-                            phone: {
-                                type: 'string',
-                                example: '00989876543210',
-                            },
-                            firstName: {
-                                type: 'string',
-                                example: 'یارو',
-                            },
-                            lastName: {
-                                type: 'string',
-                                example: 'فلانی',
-                            },
-                            gender: {
-                                type: 'boolean',
-                                example: true,
-                            },
-                            dateOfBirth: {
-                                type: 'date',
-                                example: '2021-08-04',
-                            },
-                            avatar: {
-                                type: 'string',
-                                example: 'base64',
-                            },
-                            credit: {
-                                type: 'number',
-                                example: 2147483647,
+                                example: '5678',
                             },
                         },
-                        required: ['token'],
+                        required: ['token', 'currentPassword', 'newPassword'],
                     },
                 },
             },
         },
         responses: {
             200: {
-                description: "User's info changed successfully",
+                description: "User's password changed successfully",
                 content: {
                     'application/json': {
                         schema: {
